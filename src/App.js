@@ -1,26 +1,47 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Nav from './Nav';
+import SignUp from './SignUp';
+import User from './User';
+import {BrowserRouter as Router, Switch, Route, Link} from 'react-router-dom';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Jumbotron from 'react-bootstrap/Jumbotron';
+import {MarkGithubIcon} from '@primer/octicons-react'
+import {NoteIcon} from '@primer/octicons-react'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <Nav />
+        <Switch>
+        <Route path='/' exact component={Home} />
+        <Route path='/signup' component={SignUp} />
+        <Route path='/user' component={User} />
+        </Switch>
+      </div>
+    </Router>
   );
 }
+
+const Home = () => (
+  <div>
+    <Container>
+      <Jumbotron>
+    <h1>My Journal</h1>
+    <p>"Be ready when inspiraton comes"</p>
+    <li>
+      <Link to='/signup'>
+      <Button variant='secondary'><NoteIcon size={16} />Sign Up</Button>
+      </Link>
+        </li>
+      </Jumbotron>
+      <h1>Project by Antonio Silva</h1>
+        <p>Find this code being hosted on GitHub, Follow this link to see <a href='https://github.com'>
+      <MarkGithubIcon size='small'/>GitHub
+    </a></p>
+      </Container>
+  </div>
+);
 
 export default App;

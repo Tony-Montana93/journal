@@ -1,55 +1,18 @@
 import React from 'react';
+import './App.css';
 import {Formik} from 'formik';
-// import * as EmailValidator from 'email-validator';
 import * as Yup from 'yup';
-// import Container from 'react-bootstrap/Container';
-// import Jumbotron from 'react-bootstrap/Jumbotron';
-// import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Jumbotron from 'react-bootstrap/Jumbotron';
 import Form from 'react-bootstrap/Form';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Link, Redirect} from "react-router-dom";  
 
-// function SignUp() {
-//   return (
-//     <div>
-//       <h1>Sign up page</h1>
-//       <Container className='p3'>
-//       <Jumbotron>
-//       <Form>
-//         <Form.Group controlId="formBasicEmail">
-//             <Form.Label>Email address</Form.Label>
-//             <Form.Control type="email" placeholder="Enter email" />
-//             <Form.Text className="text-muted">
-//             We'll never share your email with anyone else.
-//             </Form.Text>
-//         </Form.Group>
 
-//         <Form.Group controlId="formBasicPassword">
-//             <Form.Label>Password</Form.Label>
-//             <Form.Control type="password" placeholder="Password" />
-//         </Form.Group>
-//         <Form.Group>
-//               <Form.Check
-//                 type='checkbox'
-//                 label={`Male`}
-//             />
-//             <Form.Check
-//                 type='checkbox'
-//                 label={`Female`}
-//             />
-//             <Form.Check
-//                 type='checkbox'
-//                 label={`Other`}
-//             />
-//         </Form.Group>
-
-//   <Button variant="primary" type="submit">
-//             Submit
-//   </Button>
-// </Form>
-//       </Jumbotron>
-//       </Container>
-//     </div>
-//   );
-// }
+const location = {
+    pathname: '/user',
+    state: { fromDashboard: true }
+  }
 
 const SignUp = () => (
     <Formik
@@ -60,9 +23,7 @@ const SignUp = () => (
           setSubmitting(false);
         }, 500);
       }}
-     
       //Using Yum for validation
-  
       validationSchema={Yup.object().shape({
         email: Yup.string()
           .email()
@@ -84,7 +45,14 @@ const SignUp = () => (
           handleSubmit
         } = props;
         return (
+      <Container className='p3'>
+      <Jumbotron>
           <form onSubmit={handleSubmit}>
+            <label>Full Name</label>
+            <input name='full name' 
+            type='text' 
+            placeholder='Enter full name'
+            ></input>
             <label htmlFor="email">Email</label>
             <input
               name="email"
@@ -95,9 +63,11 @@ const SignUp = () => (
               onBlur={handleBlur}
               className={errors.email && touched.email && "error"}
             />
+              <em className='text-muted'>We will never share your email with anyone</em>
             {errors.email && touched.email && (
               <div className="input-feedback">{errors.email}</div>
             )}
+
             <label htmlFor="email">Password</label>
             <input
               name="password"
@@ -115,23 +85,29 @@ const SignUp = () => (
               <Form.Check
                 type='radio'
                 label={`Male`}
-                enabled={'onClick'}
+                name='male'
             />
             <Form.Check
                 type='radio'
                 label={`Female`}
-                enabled={'onClick'}
+                name='female'
             />
             <Form.Check
                 type='radio'
                 label={`Other`}
-                enabled={'onClick'}
+                name='other'
             />
         </Form.Group>
-            <button type="submit" disabled={isSubmitting}>
+        <Link to={location}/>
+            <Redirect to={location}/>
+            history.push(location)
+            history.replace(location)
+            <button class="btn btn-primary" type="submit" disabled={isSubmitting}>
               Sign up
             </button>
           </form>
+          </Jumbotron>
+          </Container>
         );
       }}
     </Formik>
